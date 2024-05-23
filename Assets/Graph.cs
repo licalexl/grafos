@@ -6,19 +6,23 @@ public class Graph : MonoBehaviour
 {
     private List<Node> nodes = new List<Node>();
 
-    public Graph() 
+    public Graph()
     {
-    
+        nodes = new List<Node>();
     }
-
-    public void AddNode(Node newnode) 
-    {
-      nodes.Add(newnode);
-    }
-
 
     public Graph(ref List<Node> listNodes)
     {
         nodes = listNodes;
+    }
+
+    public void AddNode(Node newNode)
+    {
+        nodes.Add(newNode);
+    }
+
+    public List<Node> GetNodes()
+    {
+        return nodes;
     }
 }

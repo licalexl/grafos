@@ -1,25 +1,102 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-  private void Initialize() 
+    public GameObject nodePrefab;
+    public GameObject linePrefab;
+
+    private List<GameObject> nodeGameObjects = new List<GameObject>();
+    private List<GameObject> lineGameObjects = new List<GameObject>();
+
+    void Start()
     {
-      Node _node1 = new Node(val:3);
-      Node _node2 = new Node(val:3);
-      Node _node3 = new Node(val:2);
-      Node _node4 = new Node(val:4);
-      Node _node5 = new Node(val:5);
-      Node _node6 = new Node(val:10);
+        Initialize();
+    }
 
-        Edge edge13 = new Edge(one: ref _node1, two: ref _node3);
+    void Update()
+    {
 
-        _node1.AddEdge(ref edge13);
-        _node3.AddEdge(ref edge13);
+    }
+
+    private void Initialize()
+    {
+        Node node1 = new Node(3);
+        Node node2 = new Node(3);
+        Node node3 = new Node(2);
+        Node node4 = new Node(10);
+        Node node5 = new Node(5);
+        Node node6 = new Node(4);
+
+        Edge edge13 = new Edge(ref node1, ref node3);
+        Edge edge23 = new Edge(ref node2, ref node3);
+        Edge edge26 = new Edge(ref node2, ref node6);
+        Edge edge34 = new Edge(ref node3, ref node4);
+        Edge edge36 = new Edge(ref node3, ref node6);
+        Edge edge45 = new Edge(ref node4, ref node5);
+        Edge edge56 = new Edge(ref node5, ref node6);
+
+        node1.AddEdge(ref edge13);
+        node3.AddEdge(ref edge13);
+        node2.AddEdge(ref edge23);
+        node3.AddEdge(ref edge23);
+        node2.AddEdge(ref edge26);
+        node6.AddEdge(ref edge26);
+        node3.AddEdge(ref edge34);
+        node4.AddEdge(ref edge34);
+        node3.AddEdge(ref edge36);
+        node6.AddEdge(ref edge36);
+        node4.AddEdge(ref edge45);
+        node5.AddEdge(ref edge45);
+        node5.AddEdge(ref edge56);
+        node6.AddEdge(ref edge56);
 
         Graph graph = new Graph();
+        graph.AddNode(node1);
+        graph.AddNode(node2);
+        graph.AddNode(node3);
+        graph.AddNode(node4);
+        graph.AddNode(node5);
+        graph.AddNode(node6);
 
-        graph.AddNode(_node1);
-    } 
+        HacerGrafito(graph);
+    }
+
+    private void HacerGrafito(Graph graph)
+    {
+        Dictionary<Node, GameObject> nodeObjectMap = new Dictionary<Node, GameObject>();
+
+        foreach (Node node in graph.GetNodes())
+        {
+            Vector3 position = new Vector3(Random.Range(-50, 50), Random.Range(-30, 30),  Random.Range(-30, 30));
+            GameObject nodeGO = Instantiate(nodePrefab, position, Quaternion.identity);
+            nodeObjectMap[node] = nodeGO;
+            nodeGameObjects.Add(nodeGO);
+        }
+
+        foreach (Node node in graph.GetNodes())
+        {
+            foreach (Edge edge in node.GetEdges())
+            {
+                if (!nodeObjectMap.ContainsKey(edge.Node1()) || !nodeObjectMap.ContainsKey(edge.Node2()))
+                    continue;
+
+                GameObject lineGO = Instantiate(linePrefab);
+
+                Vector3 node1Position = nodeObjectMap[edge.Node1()].transform.position;
+                Vector3 node2Position = nodeObjectMap[edge.Node2()].transform.position;
+
+                Vector3 midpoint = (node1Position + node2Position) / 2;
+                lineGO.transform.position = midpoint;
+
+                Vector3 direction = node2Position - node1Position;
+                lineGO.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+
+                float distance = Vector3.Distance(node1Position, node2Position);
+                lineGO.transform.localScale = new Vector3(distance, 0.1f, 0.1f);
+
+                lineGameObjects.Add(lineGO);
+            }
+        }
+    }
 }
