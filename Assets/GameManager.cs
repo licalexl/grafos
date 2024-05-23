@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -57,43 +58,57 @@ public class GameManager : MonoBehaviour
         graph.AddNode(node5);
         graph.AddNode(node6);
 
-        HacerGrafito(graph);
+        instaciarNodos(graph);
     }
-
-    private void HacerGrafito(Graph graph)
+    private void instaciarNodos(Graph graph)
     {
-        Dictionary<Node, GameObject> nodeObjectMap = new Dictionary<Node, GameObject>();
+        Dictionary<Node, GameObject> instanciaNodosObject = new Dictionary<Node, GameObject>();
 
         foreach (Node node in graph.GetNodes())
         {
-            Vector3 position = new Vector3(Random.Range(-50, 50), Random.Range(-30, 30),  Random.Range(-30, 30));
-            GameObject nodeGO = Instantiate(nodePrefab, position, Quaternion.identity);
-            nodeObjectMap[node] = nodeGO;
-            nodeGameObjects.Add(nodeGO);
+            Vector3 position = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20,20));
+            GameObject iniciarNodos = Instantiate(nodePrefab, position, Quaternion.identity);
+            instanciaNodosObject[node] = iniciarNodos;
+            nodeGameObjects.Add(iniciarNodos);
         }
 
+
+
+
+        HacerGrafito(graph, instanciaNodosObject);
+    }
+    private void HacerGrafito(Graph graph, Dictionary<Node, GameObject> instanciaNodosObject)
+    {
+       
         foreach (Node node in graph.GetNodes())
         {
             foreach (Edge edge in node.GetEdges())
             {
-                if (!nodeObjectMap.ContainsKey(edge.Node1()) || !nodeObjectMap.ContainsKey(edge.Node2()))
+                if (!instanciaNodosObject.ContainsKey(edge.Node1()) || !instanciaNodosObject.ContainsKey(edge.Node2()))
                     continue;
 
-                GameObject lineGO = Instantiate(linePrefab);
+                GameObject objectoLinea = Instantiate(linePrefab);
 
-                Vector3 node1Position = nodeObjectMap[edge.Node1()].transform.position;
-                Vector3 node2Position = nodeObjectMap[edge.Node2()].transform.position;
+                Vector3 pos1N = instanciaNodosObject[edge.Node1()].transform.position;
 
-                Vector3 midpoint = (node1Position + node2Position) / 2;
-                lineGO.transform.position = midpoint;
 
-                Vector3 direction = node2Position - node1Position;
-                lineGO.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+                Vector3 pos2N = instanciaNodosObject[edge.Node2()].transform.position;
 
-                float distance = Vector3.Distance(node1Position, node2Position);
-                lineGO.transform.localScale = new Vector3(distance, 0.1f, 0.1f);
+                Vector3 puntoIntermedio = (pos1N + pos2N) / 2;
 
-                lineGameObjects.Add(lineGO);
+
+                objectoLinea.transform.position = puntoIntermedio;
+
+                Vector3 direction = pos2N - pos1N;
+
+                objectoLinea.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+
+
+                float distancia = Vector3.Distance(pos1N, pos2N);
+
+                objectoLinea.transform.localScale = new Vector3(distancia, 0.1f, 0.1f);
+
+                lineGameObjects.Add(objectoLinea);
             }
         }
     }
