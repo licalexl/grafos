@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Initialize();
+        Creacion();
     }
 
     void Update()
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Initialize()
+    private void Creacion()
     {
         Node node1 = new Node(3);
         Node node2 = new Node(3);
@@ -28,28 +28,26 @@ public class GameManager : MonoBehaviour
         Node node5 = new Node(5);
         Node node6 = new Node(4);
 
-        Edge edge13 = new Edge(ref node1, ref node3);
-        Edge edge23 = new Edge(ref node2, ref node3);
-        Edge edge26 = new Edge(ref node2, ref node6);
-        Edge edge34 = new Edge(ref node3, ref node4);
-        Edge edge36 = new Edge(ref node3, ref node6);
-        Edge edge45 = new Edge(ref node4, ref node5);
-        Edge edge56 = new Edge(ref node5, ref node6);
+        Edge edge1_2 = new Edge(ref node1, ref node2);
+        Edge edge2_3 = new Edge(ref node2, ref node3);
+        Edge edge2_1 = new Edge(ref node2, ref node1);
+        Edge edge3_4 = new Edge(ref node3, ref node4);
+        Edge edge3_2 = new Edge(ref node3, ref node2);
+        Edge edge4_5 = new Edge(ref node4, ref node5);
+        Edge edge4_3 = new Edge(ref node4, ref node3);
+        Edge edge5_6 = new Edge(ref node5, ref node6);
+        Edge edge5_2 = new Edge(ref node5, ref node2);
 
-        node1.AddEdge(ref edge13);
-        node3.AddEdge(ref edge13);
-        node2.AddEdge(ref edge23);
-        node3.AddEdge(ref edge23);
-        node2.AddEdge(ref edge26);
-        node6.AddEdge(ref edge26);
-        node3.AddEdge(ref edge34);
-        node4.AddEdge(ref edge34);
-        node3.AddEdge(ref edge36);
-        node6.AddEdge(ref edge36);
-        node4.AddEdge(ref edge45);
-        node5.AddEdge(ref edge45);
-        node5.AddEdge(ref edge56);
-        node6.AddEdge(ref edge56);
+        node1.AddEdge(ref edge1_2);
+        node2.AddEdge(ref edge2_3);
+        node2.AddEdge(ref edge2_1);
+        node3.AddEdge(ref edge3_4);
+        node3.AddEdge(ref edge3_2);
+        node4.AddEdge(ref edge4_5);
+        node4.AddEdge(ref edge4_3);
+        node5.AddEdge(ref edge5_6);
+        node5.AddEdge(ref edge5_2);
+        
 
         Graph graph = new Graph();
         graph.AddNode(node1);
