@@ -6,7 +6,7 @@ public class Edge
 {
     Node _node1;
     Node _node2;
-    float _distance;
+    float _distancia;
 
     public Edge(ref Node one, ref Node two)
     {

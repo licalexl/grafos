@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         node4.AddEdge(ref edge4_3);
         node5.AddEdge(ref edge5_6);
         node5.AddEdge(ref edge5_2);
-        
+
 
         Graph graph = new Graph();
         graph.AddNode(node1);
@@ -60,10 +60,10 @@ public class GameManager : MonoBehaviour
 
         instaciarNodos(graph);
     }
-    
+
     private void HacerGrafito(Graph graph, Dictionary<Node, GameObject> instanciaNodosObject)
     {
-       
+
         foreach (Node node in graph.GetNodes())
         {
             foreach (Edge edge in node.GetEdges())

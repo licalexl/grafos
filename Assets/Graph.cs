@@ -25,4 +25,33 @@ public class Graph : MonoBehaviour
     {
         return nodes;
     }
+
+    public void DFS(Node n) 
+    {
+    
+    
+    }
+    /*
+    public void BFS(Node n)
+    {
+        foreach (Edge edge in n.GetEdges()) 
+        {
+
+            if (edge.Node1() == n)
+                {
+            
+            
+            }
+        
+        }
+
+    }*/
+
+    /*
+    public List<Node> GetNodesToVisit(Node n) 
+    {
+    
+      List<Node> nodesToVisit = new list<Node>();
+    
+    }*/
 }
