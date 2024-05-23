@@ -60,23 +60,7 @@ public class GameManager : MonoBehaviour
 
         instaciarNodos(graph);
     }
-    private void instaciarNodos(Graph graph)
-    {
-        Dictionary<Node, GameObject> instanciaNodosObject = new Dictionary<Node, GameObject>();
-
-        foreach (Node node in graph.GetNodes())
-        {
-            Vector3 position = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20,20));
-            GameObject iniciarNodos = Instantiate(nodePrefab, position, Quaternion.identity);
-            instanciaNodosObject[node] = iniciarNodos;
-            nodeGameObjects.Add(iniciarNodos);
-        }
-
-
-
-
-        HacerGrafito(graph, instanciaNodosObject);
-    }
+    
     private void HacerGrafito(Graph graph, Dictionary<Node, GameObject> instanciaNodosObject)
     {
        
@@ -111,5 +95,21 @@ public class GameManager : MonoBehaviour
                 lineGameObjects.Add(objectoLinea);
             }
         }
+    }
+
+
+    private void instaciarNodos(Graph graph)
+    {
+        Dictionary<Node, GameObject> instanciaNodosObject = new Dictionary<Node, GameObject>();
+
+        foreach (Node node in graph.GetNodes())
+        {
+            Vector3 position = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20, 20));
+            GameObject iniciarNodos = Instantiate(nodePrefab, position, Quaternion.identity);
+            instanciaNodosObject[node] = iniciarNodos;
+            nodeGameObjects.Add(iniciarNodos);
+        }
+
+        HacerGrafito(graph, instanciaNodosObject);
     }
 }
